@@ -1,0 +1,274 @@
+<?php 
+session_start();
+include_once('connect.php');
+
+if (isset($_SESSION['address']) && isset($_SESSION['username'])) {}
+
+
+
+if (empty($_SESSION['cart_item'])){
+    alert("Cart is Empty!!");
+}else{
+    $username = $_SESSION['username'];
+    foreach ($_SESSION['cart_item'] as $item) {
+        $pizid=$item['name'];
+        $tprice = ($item["cost"]*$item["quantity"]);
+        
+        $sql1 = "INSERT INTO cart(piza,user,price) VALUES ('$pizid','$username','$tprice')";
+
+        $tprice=0;
+
+        if (mysqli_query($con, $sql1)) { 
+        } else { 
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link); 
+        } 
+    }
+}
+
+
+
+ ?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+      <script>   
+        function welcome(){
+            var now=new Date();
+            var hour=now.getHours();
+            var min=now.getMinutes();
+
+            document.getElementById("timef").value="Hey User !! Time is "+hour+":"+min+" IST";
+        } 
+        setInterval('welcome()',1000);
+        function wel(){
+            var now=new Date();
+            var hour=now.getHours();
+            if (hour <= 11 && hour > 5){
+                alert("Good Morning !! Order any Fresh Pizza to start your Day");    
+                return true;
+            }
+            else if (hour <= 16 && hour > 11){
+                alert("Good Afternoon !! Order any Seasoned Pizza for your lunch");       
+                return true;
+            }
+            else if (hour <= 22 && hour > 16){
+                alert("Good Evening !! Order any Chezzelicious Pizza for Dinner");      
+                return true;
+            }
+            else{
+                alert("Good Night !! End your Day with a Wonderful note and Pizza on side");       
+                return true;
+            }
+        }
+        function validate() {    
+            var username = document.reg_form.username;    
+            var pass = document.reg_form.pass;  
+            var pas = document.reg_form.pas;     
+            var phone = document.reg_form.phone; 
+            var mail = document.reg_form.mail;    
+            var mailform = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    
+            if (username.value.length <= 0 || username.value.length >= 16) {    
+                alert("Name is Too Short or Too long, Limit Username to 15 characters");    
+                name.focus();    
+                return false;    
+            }  
+            if (pass.value.length <= 7 || pass.value.length >= 16) {    
+                alert("Password of Minimum 8 digits and Maximum 15 digits is required ");    
+                pass.focus();    
+                return false; 
+            }
+            if (pas.value != pass.value) {    
+                alert("Passwords are not same");    
+                pas.focus();    
+                return false; 
+            }                    
+            if (phone.value.length != 10) {    
+                alert("Mobile number is not valid !!");    
+                phone.focus();    
+                return false;    
+            }
+            if(mail.value.match(mailform))
+            {
+                alert("Valid email address!");
+                mail.focus();
+                return true;
+            }else{
+                alert("You have entered an invalid email address!");
+                mail.focus();
+                return false;
+            }     
+            return false;    
+        } 
+        function valid() {    
+            var name = document.log_form.name; 
+            var username = document.reg_form.username;   
+            var pass = document.log_form.pass; 
+                
+            if (name.value.length <= 0 || name.value.length >= 16) {    
+                alert("Name is Too Short or Too long, Limit Username to 15 characters");    
+                name.blur();    
+                return false;    
+            }  
+            if (pass.value.length <= 7 || pass.value.length >= 16) {    
+                alert("Minimum 8 digits and Maximum 15 digits is required");    
+                pass.focus();    
+                return false; 
+            }     
+            return false;    
+        }   
+    </script> 
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="basic.css">
+        <!--<style type="text/css">@import url("basic2.css");</style>-->
+        <title>1st program</title>
+        <style>
+            .screen {
+                margin: 3% 15%;
+                text-align:center;
+                border: 2px solid black;
+                background-color: #ddd;
+            }
+            
+            .thank {
+            font-weight: 700;
+            font-size: 2rem;
+            color: black;
+            }
+            .star{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin: 2.5% 5%;
+            }
+            .container1{
+                background-color: rgba(229, 241, 252, 0.645);
+            }
+            .containe{
+                align-items: center;
+                width:100%;
+                background-color: rgba(50, 51, 51, 0.665);
+            }
+            .star .ok a{
+                text-decoration: none;
+                margin: 0 2rem;
+                padding: 1rem;
+                color:black;
+                text-shadow: 1px 1px white;
+                background-color: #0079ff;
+              }
+
+            .star li{
+                text-decoration: none;
+                margin: 1.6rem 3rem;}
+
+            .ok{
+                display: inline;
+                align-items: center;
+                list-style-type: none;
+                font-size: 1.7rem;
+            }
+            .h{
+                color: rgb(36, 4, 124);  
+                padding: 10px;      
+                font-size: 2em;
+                background-color: #24ff12;
+
+            }
+            .star .ok a:hover{
+                border-bottom: 3px solid black;}
+            table {
+                margin:auto;
+                border: 1px solid black;
+                border-collapse: collapse;
+                }
+            th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding:0.7rem;
+                }
+
+        </style>
+    </head>
+    <body  onload="wel()">
+
+        <div class="star">
+            <div class="h">CHeZZa PiZZa 🍕</div>
+            <div class="ok">
+                
+                    <a href="basic.php">Home</a>
+                    <a href="menu3.php">Menu</a>
+                
+            </div>
+            <div style="margin: 1rem;color: #24ff12;font-size:1.8rem;text-shadow:2px 2px black;">Hi, <?php echo $_SESSION['username']; ?>&emsp;&emsp;<button class="btn btn-dark"><a href="logout.php">Logout</a></button></div>
+        </div>   
+
+        <br><br>
+
+    <div class = "screen" style="display: block;" id="after-co">
+        <div class = "thank"><p  style="font-size:3rem">YOUR INVOICE !!</p><br>
+        <table>
+                <tr><th>Order No.</th><th>Items</th><th>Price</th></tr>
+         <?php
+         
+         $name=$_SESSION['username'];
+         $sql="SELECT * FROM cart WHERE user='$name'";
+
+
+         $res=mysqli_query($con,$sql);
+
+         while($row=mysqli_fetch_assoc($res)){
+             $pi=$row['order_no'];
+             $piz=$row['piza'];
+             $pri=$row['price'];
+
+         ?> 
+        <div class="pname">
+            <tr>
+            <td><?= $pi; ?></td>
+            <td><?= $piz; ?></td>
+            <td><?= $pri; ?></td>
+         </tr></div>
+        <?php } ?>
+    </table><br>
+        </div>
+    </div>
+
+
+   
+    <br><br><br>
+    <!-- Footer -->
+<footer class="page-footer blue pt-4">
+  <div class="container-fluid text-center text-md-left">
+    <div class="row">
+      <div class="col-md-6 mt-md-0 mt-3">
+        <!-- Content -->
+        <h5>CheZZa PiZZa</h5>
+        <p>We serve you one of the most Chezziest pizzas in Mumbai. Quality Service has been our top Feature since the beginning of our Company. So what are you waiting for order at the earliest and enjoy the Offers present.</p>
+      </div>
+      <hr class="clearfix w-100 d-md-none pb-3">
+
+      <div class="col-md-3 mb-md-0 mb-3">
+        <h5 class="text-uppercase">Know more about us</h5><br>
+        <ul class="list-unstyled">
+          <li>
+            <a>Branches: Ghatkopar(E), Vidyavihar(W)</a></li>
+          <li>
+            <a>Contact us @ +91 90000 12345</a></li>
+        </ul>
+      </div>
+      <!-- Grid column -->
+    </div>
+    <!-- Grid row -->
+  </div>
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">CHeZZa PiZZa © 2020 Copyright</div>
+</footer>
+    </body>
+</html>
+
