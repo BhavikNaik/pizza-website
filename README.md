@@ -1,2 +1,2 @@
 # pizza-website
-Wpl project 
+Web programming project built using html, css, javascript, php and postgresql.
